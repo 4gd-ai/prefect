@@ -9,7 +9,7 @@ ARG BASE_IMAGE=python:${PYTHON_VERSION}-slim
 # The version used to build the Python distributable.
 ARG BUILD_PYTHON_VERSION=3.9
 # THe version used to build the UI distributable.
-ARG NODE_VERSION=18.18.0
+ARG NODE_VERSION=22.12.0
 # Any extra Python requirements to install
 ARG EXTRA_PIP_PACKAGES=""
 
@@ -107,7 +107,7 @@ COPY --from=ghcr.io/astral-sh/uv:0.6.17 /uv /bin/uv
 COPY --from=python-builder /opt/prefect/dist ./dist
 
 # Extras to include during installation
-ARG PREFECT_EXTRAS=[redis,client,otel]
+ARG PREFECT_EXTRAS=
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv pip install "./dist/prefect.tar.gz${PREFECT_EXTRAS:-""}" && \
     rm -rf dist/
